@@ -3,6 +3,7 @@ import argparse
 import hashlib
 from pathlib import Path
 import plistlib
+import re
 import shutil
 import subprocess
 import tempfile
@@ -13,7 +14,19 @@ ROOT = Path(__file__).resolve().parents[1]
 def package(build, output):
     output.mkdir(parents=True, exist_ok=True)
     checksums = []
-    for format, name in [('AU', 'TopBrass.component'), ('VST3', 'TopBrass.vst3'), ('Standalone', 'TopBrass.app')]:
+    expected_version = re.search(r'project\(TopBrass VERSION ([0-9.]+)', (ROOT / 'CMakeLists.txt').read_text())[1]
+    formats = [('AU', 'TopBrass.component'), ('VST3', 'TopBrass.vst3'), ('Standalone', 'TopBrass.app')]
+    for format, name in formats:
+        bundle = build / 'TopBrass_artefacts/Release' / format / name
+        with (bundle / 'Contents/Info.plist').open('rb') as stream:
+            info = plistlib.load(stream)
+        if info['CFBundleShortVersionString'] != expected_version:
+            raise ValueError('Stale bundle version: ' + str(bundle))
+        executable = bundle / 'Contents/MacOS' / info['CFBundleExecutable']
+        archs = subprocess.check_output(['lipo', '-archs', str(executable)], text=True).split()
+        if archs != ['arm64']:
+            raise ValueError('Expected an Apple Silicon build: ' + str(bundle))
+    for format, name in formats:
         source = build / 'TopBrass_artefacts/Release' / format / name
         subprocess.run(['codesign', '--verify', '--deep', '--strict', str(source)], check=True)
         with (source / 'Contents/Info.plist').open('rb') as stream:
