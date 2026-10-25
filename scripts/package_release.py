@@ -48,7 +48,7 @@ def package(build, output):
                     target_notice = notices / path.relative_to(juce)
                     target_notice.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(path, target_notice)
-            subprocess.run(['ditto', '-c', '-k', '--sequesterRsrc', str(stage), str(target.resolve())], check=True)
+            subprocess.run(['ditto', '-c', '-k', '--zlibCompressionLevel', '1', '--sequesterRsrc', str(stage), str(target.resolve())], check=True)
         if target.stat().st_size >= 2 * 1024**3:
             raise ValueError('Release asset exceeds GitHub limit: ' + str(target))
         with target.open('rb') as stream:
