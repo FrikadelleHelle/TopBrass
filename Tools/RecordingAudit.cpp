@@ -34,8 +34,8 @@ int main(int argc,char** argv) {
         const auto* cases=config["cases"].getArray();check(cases!=nullptr,"Read cases");
         juce::String error; auto plugin=manager.createPluginInstance(*types[0],48000,512,error); check(plugin!=nullptr,error);
         juce::AudioProcessorParameter* feelParameter=nullptr;
-        for(auto* parameter:plugin->getParameters()) if(parameter->getName(256)=="Horn feel") feelParameter=parameter;
-        check(feelParameter!=nullptr,"Horn feel parameter is required");
+        for(auto* parameter:plugin->getParameters()) if(parameter->getName(256)=="Section accents") feelParameter=parameter;
+        check(feelParameter!=nullptr,"Section accents parameter is required");
         const float defaultFeel=feelParameter->getValue();
         for(const auto& item:*cases) {
             const double rate=static_cast<double>(item["rate"]);
@@ -50,7 +50,7 @@ int main(int argc,char** argv) {
                 const int isolated=static_cast<int>(item["isolate_player"]);
                 check(!isolate || (isolated>=0 && isolated<6 && static_cast<double>(item["isolate_player"])==isolated),"Isolation requires a player index0..5");
                 const float feel=item.hasProperty("horn_feel")?static_cast<float>(item["horn_feel"]):defaultFeel;
-                check(std::isfinite(feel) && feel>=0 && feel<=1,"Horn feel must be finite and normalized");
+                check(std::isfinite(feel) && feel>=0 && feel<=1,"Section accents must be finite and normalized");
                 const bool extra=static_cast<bool>(item["extra_players"]) || paired;
                 for(int part=0;part<6;++part) {
                     const juce::String label=juce::StringArray{"Saxophone","Trumpet","Trombone","Tuba","Saxophone II","Trumpet II"}[part];
@@ -62,6 +62,9 @@ int main(int argc,char** argv) {
                 set(*plugin,"Attack accent",0);set(*plugin,"Baritone keys",static_cast<float>(item["keys"]));set(*plugin,"Baritone airflow",static_cast<float>(item["airflow"]));
                 set(*plugin,"Playing mode",ensemble?1:0);
                 if(feelParameter->getValue()!=feel) feelParameter->setValueNotifyingHost(feel);
+                const float humanize=item.hasProperty("humanize")?static_cast<float>(item["humanize"]):0.0f;
+                check(std::isfinite(humanize) && humanize>=0 && humanize<=1,"Humanize must be finite and normalized");
+                set(*plugin,"Humanize",humanize);
                 const bool tenorDetail=static_cast<bool>(item["tenor_detail_midi"]);
                 set(*plugin,"Tenor detail MIDI",tenorDetail?1:0,tenorDetail);
                 set(*plugin,"Tenor detail level",(static_cast<float>(item["tenor_detail_db"])+48)/84,tenorDetail);
