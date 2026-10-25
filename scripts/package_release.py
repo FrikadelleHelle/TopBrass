@@ -15,6 +15,10 @@ def package(build, output):
     output.mkdir(parents=True, exist_ok=True)
     checksums = []
     expected_version = re.search(r'project\(TopBrass VERSION ([0-9.]+)', (ROOT / 'CMakeLists.txt').read_text())[1]
+    bank_hashes = {}
+    for name in ('TopBrass.bank', 'TopBrass.keys', 'TopBrass.air', 'TopBrass.tenor'):
+        with (ROOT / 'assets' / name).open('rb') as stream:
+            bank_hashes[name] = hashlib.file_digest(stream, 'sha256').hexdigest()
     formats = [('AU', 'TopBrass.component'), ('VST3', 'TopBrass.vst3'), ('Standalone', 'TopBrass.app')]
     for format, name in formats:
         bundle = build / 'TopBrass_artefacts/Release' / format / name
@@ -22,6 +26,13 @@ def package(build, output):
             info = plistlib.load(stream)
         if info['CFBundleShortVersionString'] != expected_version:
             raise ValueError('Stale bundle version: ' + str(bundle))
+        for name, checksum in bank_hashes.items():
+            with (bundle / 'Contents/Resources' / name).open('rb') as stream:
+                if hashlib.file_digest(stream, 'sha256').hexdigest() != checksum:
+                    raise ValueError('Stale bundled bank: ' + str(bundle / name))
+        for notice in (ROOT / 'assets/plugin-resources').iterdir():
+            if notice.is_file() and (bundle / 'Contents/Resources/plugin-resources' / notice.name).read_bytes() != notice.read_bytes():
+                raise ValueError('Stale bundled notice: ' + str(bundle / notice.name))
         executable = bundle / 'Contents/MacOS' / info['CFBundleExecutable']
         archs = subprocess.check_output(['lipo', '-archs', str(executable)], text=True).split()
         if archs != ['arm64']:
