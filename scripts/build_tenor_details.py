@@ -35,7 +35,6 @@ def main():
     for source,target in [('LICENSE','MTG-SoloSax-LICENSE.txt'),('README.md','MTG-SoloSax-README.md')]:
         assert hashlib.sha1(f'blob {(CACHE/source).stat().st_size}\0'.encode()+(CACHE/source).read_bytes()).hexdigest()==entries[source]['sha']
         shutil.copy2(CACHE/source,refs/target)
-    (refs/'MTG-SoloSax-attribution.txt').write_text('Tenor detail recordings: Music Technology Group, Universitat Pompeu Fabra, Barcelona.\nSFZ preparation: kinwie.\nSource: https://github.com/sfzinstruments/MTG.SoloSax\nPinned commit: b494d256549b3d088fdec176ce82867f8a1f58b2\nLicense: Creative Commons Attribution4.0 International; see MTG-SoloSax-LICENSE.txt.\nTopBrass retains complete decoded PCM and provides explicit one-shot triggers; it does not recreate the source SFZ instrument or automatically schedule phrase inhalations. These recordings come from another tenor source than the main VCSL tenor.\n')
     if not output.exists() or output.read_bytes()!=payload:
         temporary=output.with_suffix('.tenor.tmp');temporary.write_bytes(payload);temporary.replace(output)
     report=dict(repository=tree['repo'],commit=tree['commit'],recordings=catalogue,bank_sha256=hashlib.sha256(output.read_bytes()).hexdigest(),decoded_pcm_bytes=sum(r['frames']*4 for r in catalogue),processing='Full original decoded mono PCM, native rate; no crop, normalization, fade, denoising, tuning or looping. Source publisher preparation is described in the retained readme.')
