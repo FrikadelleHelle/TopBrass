@@ -2,7 +2,7 @@
 
 TopBrass source code and original interface artwork are licensed under GNU AGPL version 3 (see LICENSE). Copyright 2026 TopBrass contributors. The artwork's generated-image provenance is documented in assets/ui/README.md.
 
-JUCE is a separate dependency, pinned by scripts/bootstrap.sh. It is available under AGPLv3 or the JUCE commercial license; this public distribution uses the AGPLv3 route. Its license and third-party dependency inventory are in vendor/JUCE after bootstrap. Release source includes our complete code and build scripts; bootstrap obtains the pinned JUCE source.
+JUCE is a separate dependency, pinned by scripts/bootstrap.sh. It is available under AGPLv3 or the JUCE commercial license; this public distribution uses the AGPLv3 route. Its license and third-party dependency inventory are in vendor/JUCE after bootstrap. Binary ZIPs include the JUCE dependency inventory and notice files; the release also includes a source archive of the exact JUCE revision. Release source includes our complete code and build scripts; bootstrap obtains the pinned JUCE source.
 
 Recordings are separately licensed assets. The code license does not replace their terms:
 

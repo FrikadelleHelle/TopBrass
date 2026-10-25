@@ -39,6 +39,15 @@ def package(build, output):
             subprocess.run(['ditto', str(source), str(stage / name)], check=True)
             for filename in ('LICENSE', 'LICENSES.md', 'README.md'):
                 shutil.copy2(ROOT / filename, stage / filename)
+            juce = ROOT / 'vendor/JUCE'
+            notices = stage / 'ThirdParty/JUCE'
+            notices.mkdir(parents=True)
+            shutil.copy2(juce / 'JUCE.spdx.json', notices / 'JUCE.spdx.json')
+            for path in juce.rglob('*'):
+                if path.is_file() and '.git' not in path.relative_to(juce).parts and any(word in path.name.lower() for word in ('license', 'licence', 'copying', 'notice', 'copyright', 'readme')):
+                    target_notice = notices / path.relative_to(juce)
+                    target_notice.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(path, target_notice)
             subprocess.run(['ditto', '-c', '-k', '--sequesterRsrc', str(stage), str(target.resolve())], check=True)
         if target.stat().st_size >= 2 * 1024**3:
             raise ValueError('Release asset exceeds GitHub limit: ' + str(target))
@@ -46,6 +55,10 @@ def package(build, output):
             checksum = hashlib.file_digest(stream, 'sha256').hexdigest()
         checksums.append(checksum + '  ' + target.name)
         print(checksums[-1], flush=True)
+    juce_source = output / 'JUCE-9.0.4-source.tar.gz'
+    subprocess.run(['git', '-C', str(ROOT / 'vendor/JUCE'), 'archive', '--format=tar.gz', '--prefix=JUCE-9.0.4/', '-o', str(juce_source.resolve()), '3fb5cbc0340758596dac39f7c8de47d562b4896e'], check=True)
+    with juce_source.open('rb') as stream:
+        checksums.append(hashlib.file_digest(stream, 'sha256').hexdigest() + '  ' + juce_source.name)
     (output / 'SHA256SUMS.txt').write_text('\n'.join(checksums) + '\n')
 
 
