@@ -32,7 +32,7 @@ def verify(output):
     version = re.search(r'project\(TopBrass VERSION ([0-9.]+)', (ROOT / 'CMakeLists.txt').read_text())[1]
     results = []
     for case in cases:
-        for variant in ('neutral', 'colored'):
+        for variant in ('neutral', 'current-tone'):
             directory = Path(case['directory'])
             audio, rate = sf.read(directory / (variant + '-plugin-raw.wav'), always_2d=True)
             metadata = json.loads((directory / (variant + '-host.json')).read_text())
