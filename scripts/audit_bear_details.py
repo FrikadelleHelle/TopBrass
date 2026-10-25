@@ -45,7 +45,7 @@ def audit():
                 interpretation='Recorded fingering close/open plus looped airflow, not a recorded inhalation.',
                 playback_integration='Catalogue only; active resources and playback validation establish integration status.',maps=maps,recordings=recordings,zones=zones)
     (cache/'catalog.json').write_text(json.dumps(report,indent=2)+'\n')
-    output=ROOT/'artifacts/natural-details';output.mkdir(exist_ok=True)
+    output=ROOT/'artifacts/natural-details';output.mkdir(parents=True,exist_ok=True)
     for label,source in (('baritone-key-close-native.wav','c2_close_rr1.wav'),('baritone-key-open-native.wav','c2_open_rr1.wav'),('baritone-airflow-native.wav','noise_breath.wav')):
         shutil.copy2(ROOT/'assets/cache'/BEAR_REPO.split('/')[-1]/'Samples'/source,output/label)
     license_path='LICENSE'

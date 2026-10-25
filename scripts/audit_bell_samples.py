@@ -145,7 +145,7 @@ def audit():
     (CACHE/'playback-catalog.json').write_text(json.dumps(catalog, indent=2)+'\n')
     print(json.dumps(dict(maps=maps, extracted_entries=len(records), distinct_recordings=len(unique),
                          distinct_decoded_frames=sum(r['frames'] for r in unique.values())), indent=2))
-    audition = ROOT/'artifacts/bell-and-bone'; audition.mkdir(exist_ok=True)
+    audition = ROOT/'artifacts/bell-and-bone'; audition.mkdir(parents=True,exist_ok=True)
     credits = (CACHE/'public-source/License.txt').read_text()
     (audition/'LICENSE.txt').write_text(credits)
     for instrument, root in (('trumpet',60), ('trombone',48)):

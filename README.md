@@ -28,7 +28,7 @@ cd TopBrass
 
 Bootstrap pins JUCE 9.0.4 to an exact commit, installs pinned Python dependencies, downloads the checksummed sample-input release automatically, rebuilds all four banks from those original inputs, builds AU/VST3/standalone and runs CTest. **No file from the developer's Downloads folder is needed.** Inputs and their licenses are listed in `assets/sample-inputs.lock.json` and [LICENSES.md](LICENSES.md). Most inputs are additionally checked against upstream Git blobs; Bell & Bone audio and maps have pinned SHA-256 hashes. The archive includes original sample inputs, not merely precompiled banks.
 
-The sample-input release is versioned independently and should be retained when publishing later code releases. Standard build dependencies still require internet on the first build. A fresh checkout has been tested on the release machine; this does not promise bit-identical executable signatures or successful builds on untested platforms.
+The sample-input release is versioned independently and should be retained when publishing later code releases. Standard build dependencies still require internet on the first build. The build process does not promise bit-identical executable signatures or successful builds on untested platforms.
 
 Build products are in `build/TopBrass_artefacts/Release/{AU,VST3,Standalone}`. After source changes:
 
