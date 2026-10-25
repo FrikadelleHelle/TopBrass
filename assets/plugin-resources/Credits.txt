@@ -1,0 +1,28 @@
+TopBrass recordings
+
+VCSL tenor saxophone: Versilian Studios, Sam Gossner and credited performers.
+https://github.com/sgossner/VCSL
+
+VSCO 2 Community Edition tuba:
+Versilian Studios / Sam Gossner and Simon Dalzell.
+https://versilian-studios.com/vsco-community/
+
+The VCSL and VSCO recordings are dedicated to the public domain under CC0 1.0.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+See assets/samples.lock.json in the source for pinned versions and original paths.
+
+Bear Sax baritone saxophone: Karoryfer Samples / Karoryfer Lecolds, 2017.
+https://shop.karoryfer.com/pages/free-bear-sax
+https://github.com/sfzinstruments/karoryfer.bear-sax
+Recordings are CC0 1.0. Imported root notes and native sustain loops retain source provenance.
+
+Bell & Bone trumpet and trombone: Libre Wave / David Healey.
+https://librewave.com/product/bell-and-bone/
+Public mapping source: https://codeberg.org/LibreWave/BellAndBone
+Samples: CC BY-NC-SA 4.0 with vendor CC+ permissions.
+See Bell-and-Bone-LICENSE.txt. Cropped recordings, authored gain and tuning, original loop/release coordinates translated for TopBrass playback.
+
+MTG tenor note, breath and key recordings: Music Technology Group, Universitat Pompeu Fabra; SFZ preparation by kinwie. CC BY 4.0. See MTG-SoloSax-attribution.txt.
+
+War Tuba: Jakub Lewicki / Drogomir Smolken / Karoryfer Lecolds. CC0 1.0. See War-Tuba-attribution.txt.

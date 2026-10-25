@@ -1,0 +1,17 @@
+/build*/
+/vendor/
+/.venv/
+/assets/cache/
+/assets/TopBrass.air
+/assets/TopBrass.keys
+/assets/TopBrass.bank
+/artifacts/
+.DS_Store
+
+/assets/TopBrass.tenor
+/assets/TopBrass*.json
+/assets/bank-audit.json
+__pycache__/
+*.pyc
+
+/.playwright-mcp/

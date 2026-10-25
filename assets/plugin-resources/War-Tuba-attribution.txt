@@ -1,0 +1,5 @@
+War Tuba: tuba played by Jakub Lewicki, recorded and mapped by Drogomir Smolken, Karoryfer Lecolds.
+Source: https://github.com/sfzinstruments/karoryfer.war-tuba
+Pinned commit:5b62dd6ef6b00281bb734769e44a63f5e013018a
+License:CC0 1.0 Universal; see War-Tuba-LICENSE.txt.
+TopBrass retains675 complete condenser recordings and their note/force regions. Native sustain loops use40ms pre-start crossfades and detected file decays. Source sustain+9dB scalar gain is retained. No source EQ, modulation, microphone blend, simulated ensembles or legato offsets are imported. TopBrass uses its own velocity response and deterministic take cycles.

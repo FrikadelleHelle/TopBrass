@@ -1,0 +1,6 @@
+Tenor note, breath and key recordings: Music Technology Group, Universitat Pompeu Fabra, Barcelona.
+SFZ preparation: kinwie.
+Source: https://github.com/sfzinstruments/MTG.SoloSax
+Pinned commit: b494d256549b3d088fdec176ce82867f8a1f58b2
+License: Creative Commons Attribution4.0 International; see MTG-SoloSax-LICENSE.txt.
+TopBrass retains complete decoded PCM for66 pitched notes and99 explicitly triggered breath/key sounds. The alternate tenor uses the publisher's198 note mappings, including authored root, tuning, gain, force windows and neighboring-note sequences. Each neighboring sequence reuses existing recorded notes; it is not an additional same-pitch recording. Notes are finite and unlooped. Short gates sustained recordings. TopBrass does not recreate the full SFZ instrument, its filters or legato engine, and does not automatically schedule phrase inhalations.
